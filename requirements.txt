@@ -1,0 +1,10 @@
+flask>=3.0.0
+flask-socketio>=5.3.6
+python-socketio[client]>=5.11.0
+psutil>=5.9.8
+numpy>=1.26.0
+scikit-learn>=1.4.0
+pandas>=2.2.0
+scipy>=1.12.0
+gunicorn==21.2.0
+eventlet==0.35.2

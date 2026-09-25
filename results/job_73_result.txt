@@ -1,0 +1,35 @@
+CAMPUSGRID JOB REPORT: GAUSSIAN PORTRAIT BLUR (4 CHUNKS)
+============================================================
+Job ID:             73
+Job Type:           process_portrait
+Workers Deployed:   1
+Parallel Execution: 1.929 seconds
+Single-Machine Est: 1.628 seconds
+Calculated Speedup: 0.84x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Compiled results from 4 parallel workers:
+
+--- Worker Chunk 1 Output ---
+Chunk 0 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_0_radius_2.png)
+
+--- Worker Chunk 2 Output ---
+Chunk 1 (Radius 6) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_1_radius_6.png)
+
+--- Worker Chunk 3 Output ---
+Chunk 2 (Radius 12) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_2_radius_12.png)
+
+--- Worker Chunk 4 Output ---
+Chunk 3 (Radius 20) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_3_radius_20.png)
+
+
+
+============================================================
+RAW RESULT:
+[
+  "Chunk 0 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_0_radius_2.png)",
+  "Chunk 1 (Radius 6) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_1_radius_6.png)",
+  "Chunk 2 (Radius 12) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_2_radius_12.png)",
+  "Chunk 3 (Radius 20) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_3_radius_20.png)"
+]

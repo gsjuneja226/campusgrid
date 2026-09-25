@@ -1,0 +1,35 @@
+CAMPUSGRID JOB REPORT: ANIMATION FRAME RENDER (4 CHUNKS)
+============================================================
+Job ID:             60
+Job Type:           render_frames
+Workers Deployed:   1
+Parallel Execution: 19.437 seconds
+Single-Machine Est: 19.118 seconds
+Calculated Speedup: 0.98x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Compiled results from 4 parallel workers:
+
+--- Worker Chunk 1 Output ---
+Success: Rendered frames 001 to 030 (30 total frames).
+
+--- Worker Chunk 2 Output ---
+Success: Rendered frames 031 to 060 (30 total frames).
+
+--- Worker Chunk 3 Output ---
+Success: Rendered frames 061 to 090 (30 total frames).
+
+--- Worker Chunk 4 Output ---
+Success: Rendered frames 091 to 120 (30 total frames).
+
+
+
+============================================================
+RAW RESULT:
+[
+  "Success: Rendered frames 001 to 030 (30 total frames).",
+  "Success: Rendered frames 031 to 060 (30 total frames).",
+  "Success: Rendered frames 061 to 090 (30 total frames).",
+  "Success: Rendered frames 091 to 120 (30 total frames)."
+]

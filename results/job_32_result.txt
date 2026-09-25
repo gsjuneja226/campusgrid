@@ -1,0 +1,16 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (DEMO_HEAVY_ML.PY)
+============================================================
+Job ID:             32
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 6.613 seconds
+Single-Machine Est: 6.491 seconds
+Calculated Speedup: 0.98x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Script executed successfully with empty output.
+
+============================================================
+RAW RESULT:
+"Script executed successfully with empty output."

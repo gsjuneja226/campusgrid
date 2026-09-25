@@ -1,0 +1,51 @@
+CAMPUSGRID JOB REPORT: FEDERATED AI TRAINING SIMULATION (4 CHUNKS)
+============================================================
+Job ID:             70
+Job Type:           federated_learning
+Workers Deployed:   1
+Parallel Execution: 22.972 seconds
+Single-Machine Est: 22.622 seconds
+Calculated Speedup: 0.98x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Compiled results from 4 parallel workers:
+
+--- Worker Chunk 1 Output ---
+Worker Node 1 Status:
+  - Dataset slice: samples [0 to 999] (1000 samples)
+  - Evaluated Local Accuracy: 92.75%
+  - Extracted Bias (Intercept): 2.281013
+  - Extracted Weights (First 5): [-0.0665, 1.6550, -0.1110, 1.9527, 0.0785...]
+
+--- Worker Chunk 2 Output ---
+Worker Node 2 Status:
+  - Dataset slice: samples [1000 to 1999] (1000 samples)
+  - Evaluated Local Accuracy: 93.75%
+  - Extracted Bias (Intercept): 0.885730
+  - Extracted Weights (First 5): [-0.6907, 1.4768, -0.1202, 2.0704, 0.0976...]
+
+--- Worker Chunk 3 Output ---
+Worker Node 3 Status:
+  - Dataset slice: samples [2000 to 2999] (1000 samples)
+  - Evaluated Local Accuracy: 93.75%
+  - Extracted Bias (Intercept): 1.787740
+  - Extracted Weights (First 5): [-0.2530, 1.6986, -0.1250, 1.5494, 0.3205...]
+
+--- Worker Chunk 4 Output ---
+Worker Node 4 Status:
+  - Dataset slice: samples [3000 to 3999] (1000 samples)
+  - Evaluated Local Accuracy: 94.25%
+  - Extracted Bias (Intercept): 0.693435
+  - Extracted Weights (First 5): [-0.2261, 1.6496, 0.4327, 2.1665, -0.2628...]
+
+
+
+============================================================
+RAW RESULT:
+[
+  "Worker Node 1 Status:\n  - Dataset slice: samples [0 to 999] (1000 samples)\n  - Evaluated Local Accuracy: 92.75%\n  - Extracted Bias (Intercept): 2.281013\n  - Extracted Weights (First 5): [-0.0665, 1.6550, -0.1110, 1.9527, 0.0785...]",
+  "Worker Node 2 Status:\n  - Dataset slice: samples [1000 to 1999] (1000 samples)\n  - Evaluated Local Accuracy: 93.75%\n  - Extracted Bias (Intercept): 0.885730\n  - Extracted Weights (First 5): [-0.6907, 1.4768, -0.1202, 2.0704, 0.0976...]",
+  "Worker Node 3 Status:\n  - Dataset slice: samples [2000 to 2999] (1000 samples)\n  - Evaluated Local Accuracy: 93.75%\n  - Extracted Bias (Intercept): 1.787740\n  - Extracted Weights (First 5): [-0.2530, 1.6986, -0.1250, 1.5494, 0.3205...]",
+  "Worker Node 4 Status:\n  - Dataset slice: samples [3000 to 3999] (1000 samples)\n  - Evaluated Local Accuracy: 94.25%\n  - Extracted Bias (Intercept): 0.693435\n  - Extracted Weights (First 5): [-0.2261, 1.6496, 0.4327, 2.1665, -0.2628...]"
+]

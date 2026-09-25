@@ -1,0 +1,20 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (SIMPLE_PRINT.PY)
+============================================================
+Job ID:             8
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 0.084 seconds
+Single-Machine Est: 0.032 seconds
+Calculated Speedup: 0.38x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Hello from the CampusGrid Worker Node!
+Doing some heavy scientific math...
+Result computed: 838102050
+Custom script finished executing.
+
+
+============================================================
+RAW RESULT:
+"Hello from the CampusGrid Worker Node!\nDoing some heavy scientific math...\nResult computed: 838102050\nCustom script finished executing.\n"

@@ -1,0 +1,20 @@
+CAMPUSGRID JOB REPORT: MONTE CARLO PI (100,000,000 ITERATIONS)
+============================================================
+Job ID:             25
+Job Type:           monte_carlo_pi
+Workers Deployed:   5
+Parallel Execution: 25.780 seconds
+Single-Machine Est: 127.121 seconds
+Calculated Speedup: 4.93x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Estimated Pi: 3.141794
+Actual Pi:    3.141593
+Accuracy Error: 0.000201
+
+Individual worker Pi estimates: 3.1426, 3.1414, 3.1419, 3.1418, 3.1413
+
+============================================================
+RAW RESULT:
+3.14179356

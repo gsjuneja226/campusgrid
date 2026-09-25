@@ -1,0 +1,64 @@
+How to use it
+Step 1 — On each worker PC, install and start Ollama:
+
+powershell
+# Install from https://ollama.com, then:
+ollama pull deepseek-r1:7b   # downloads the model (~4GB)
+ollama serve                  # starts the local server
+Step 2 — Start CampusGrid normally:
+
+powershell
+.\.venv\Scripts\python campusgrid/master.py    # terminal 1
+.\.venv\Scripts\python campusgrid/worker.py    # terminal 2 (each lab PC)
+Step 3 — In the dashboard at http://localhost:5000:
+
+Select 🧠 Distributed LLM Inference from the job type dropdown
+Pick a model (deepseek-r1:7b recommended)
+Choose a mode:
+🎯 Ensemble — same prompt → all workers reason independently (great for comparison)
+📋 Batch Q&A — paste multiple questions, workers split them
+📄 Document — paste a long text, workers split & summarise sections
+Each worker uses its own GPU/RAM — the master PC does zero inference. The <think>...</think> reasoning traces from DeepSeek-R1 are extracted and displayed separately from the final answer.
+
+---
+
+# How to connect OTHER lab computers as Workers
+
+How to use it
+Step 1 — On each worker PC, install and start Ollama:
+
+powershell
+# Install from https://ollama.com, then:
+ollama pull deepseek-r1:7b   # downloads the model (~4GB)
+ollama serve                  # starts the local server
+Step 2 — Start CampusGrid normally:
+
+powershell
+.\.venv\Scripts\python campusgrid/master.py    # terminal 1
+.\.venv\Scripts\python campusgrid/worker.py    # terminal 2 (each lab PC)
+Step 3 — In the dashboard at http://localhost:5000:
+
+Select 🧠 Distributed LLM Inference from the job type dropdown
+Pick a model (deepseek-r1:7b recommended)
+Choose a mode:
+🎯 Ensemble — same prompt → all workers reason independently (great for comparison)
+📋 Batch Q&A — paste multiple questions, workers split them
+📄 Document — paste a long text, workers split & summarise sections
+Each worker uses its own GPU/RAM — the master PC does zero inference. The <think>...</think> reasoning traces from DeepSeek-R1 are extracted and displayed separately from the final answer.
+
+---
+
+# How to connect OTHER lab computers as Workers
+
+To add another PC to your cluster, you just need to run the `worker.py` script on it and point it to this Master PC's IP address.
+
+1. **Copy the Code**: Transfer this entire `campus-grid` folder to the other PC (via USB drive or network share).
+2. **Install Python & Dependencies**: Make sure Python is installed on the other PC, then install the required libraries:
+   `pip install -r requirements.txt`
+3. **Install Ollama** (Optional): If you want that PC to help with LLM jobs, install Ollama and pull the model as shown in Step 1.
+4. **Start the Worker**: Run `worker.py` and specify the Master PC's IP address using the `--master` flag.
+   Your Master PC's LAN IP is currently **172.22.219.95**.
+   Run this command in PowerShell on the other PC:
+   `python campusgrid/worker.py --master 172.22.219.95`
+
+The worker will automatically connect to your dashboard and appear in the "Lab Computers" tab!

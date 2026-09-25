@@ -1,0 +1,19 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (PROCESS_PORTRAIT.PY)
+============================================================
+Job ID:             37
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 1.538 seconds
+Single-Machine Est: 1.378 seconds
+Calculated Speedup: 0.90x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Worker 1: Applying Gaussian Blur filter (Radius: 2)...
+Processing chunk 0 -> 25% doneProcessing chunk 0 -> 75% doneProcessing chunk 0 -> 100% done
+--- Return Value ---
+Chunk 0 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_0_radius_2.png)
+
+============================================================
+RAW RESULT:
+"Worker 1: Applying Gaussian Blur filter (Radius: 2)...\nProcessing chunk 0 -> 25% done\rProcessing chunk 0 -> 75% done\rProcessing chunk 0 -> 100% done\r\n--- Return Value ---\nChunk 0 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_0_radius_2.png)"

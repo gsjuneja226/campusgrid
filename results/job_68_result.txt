@@ -1,0 +1,39 @@
+CAMPUSGRID JOB REPORT: BATCH IMAGE BLUR (1 CHUNKS)
+============================================================
+Job ID:             68
+Job Type:           blur_images
+Workers Deployed:   1
+Parallel Execution: 12.630 seconds
+Single-Machine Est: 12.499 seconds
+Calculated Speedup: 0.99x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Frame 00 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_00.png)
+Frame 01 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_01.png)
+Frame 02 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_02.png)
+Frame 03 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_03.png)
+Frame 04 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_04.png)
+Frame 05 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_05.png)
+Frame 06 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_06.png)
+Frame 07 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_07.png)
+Frame 08 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_08.png)
+Frame 09 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_09.png)
+Frame 10 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_10.png)
+Frame 11 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_11.png)
+Frame 12 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_12.png)
+Frame 13 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_13.png)
+Frame 14 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_14.png)
+Frame 15 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_15.png)
+Frame 16 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_16.png)
+Frame 17 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_17.png)
+Frame 18 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_18.png)
+Frame 19 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_19.png)
+Frame 20 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_20.png)
+Frame 21 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_21.png)
+Frame 22 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_22.png)
+Frame 23 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_23.png)
+
+============================================================
+RAW RESULT:
+"Frame 00 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_00.png)\nFrame 01 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_01.png)\nFrame 02 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_02.png)\nFrame 03 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_03.png)\nFrame 04 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_04.png)\nFrame 05 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_05.png)\nFrame 06 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_06.png)\nFrame 07 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_07.png)\nFrame 08 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_08.png)\nFrame 09 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_09.png)\nFrame 10 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_10.png)\nFrame 11 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_11.png)\nFrame 12 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_12.png)\nFrame 13 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_13.png)\nFrame 14 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_14.png)\nFrame 15 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_15.png)\nFrame 16 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_16.png)\nFrame 17 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_17.png)\nFrame 18 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_18.png)\nFrame 19 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_19.png)\nFrame 20 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_20.png)\nFrame 21 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_21.png)\nFrame 22 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_22.png)\nFrame 23 rendered -> [Download/View Frame](http://localhost:5000/api/results/render_frame_23.png)"

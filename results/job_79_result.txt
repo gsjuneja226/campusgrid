@@ -1,0 +1,51 @@
+CAMPUSGRID JOB REPORT: RANDOM FOREST HYPERPARAMETER GRID SEARCH (8 CHUNKS)
+============================================================
+Job ID:             79
+Job Type:           grid_search_rf
+Workers Deployed:   1
+Parallel Execution: 40.571 seconds
+Single-Machine Est: 39.591 seconds
+Calculated Speedup: 0.98x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Compiled results from 8 parallel workers:
+
+--- Worker Chunk 1 Output ---
+Tested 2 configs. Best chunk result: {'n_estimators': 10, 'max_depth': 10} -> Accuracy: 0.994
+
+--- Worker Chunk 2 Output ---
+Tested 2 configs. Best chunk result: {'n_estimators': 10, 'max_depth': None} -> Accuracy: 0.9977
+
+--- Worker Chunk 3 Output ---
+Tested 2 configs. Best chunk result: {'n_estimators': 20, 'max_depth': 10} -> Accuracy: 0.9927
+
+--- Worker Chunk 4 Output ---
+Tested 2 configs. Best chunk result: {'n_estimators': 20, 'max_depth': None} -> Accuracy: 0.9997
+
+--- Worker Chunk 5 Output ---
+Tested 2 configs. Best chunk result: {'n_estimators': 50, 'max_depth': 10} -> Accuracy: 0.9927
+
+--- Worker Chunk 6 Output ---
+Tested 2 configs. Best chunk result: {'n_estimators': 50, 'max_depth': 15} -> Accuracy: 1.0
+
+--- Worker Chunk 7 Output ---
+Tested 2 configs. Best chunk result: {'n_estimators': 100, 'max_depth': 10} -> Accuracy: 0.9927
+
+--- Worker Chunk 8 Output ---
+Tested 2 configs. Best chunk result: {'n_estimators': 100, 'max_depth': 15} -> Accuracy: 1.0
+
+
+
+============================================================
+RAW RESULT:
+[
+  "Tested 2 configs. Best chunk result: {'n_estimators': 10, 'max_depth': 10} -> Accuracy: 0.994",
+  "Tested 2 configs. Best chunk result: {'n_estimators': 10, 'max_depth': None} -> Accuracy: 0.9977",
+  "Tested 2 configs. Best chunk result: {'n_estimators': 20, 'max_depth': 10} -> Accuracy: 0.9927",
+  "Tested 2 configs. Best chunk result: {'n_estimators': 20, 'max_depth': None} -> Accuracy: 0.9997",
+  "Tested 2 configs. Best chunk result: {'n_estimators': 50, 'max_depth': 10} -> Accuracy: 0.9927",
+  "Tested 2 configs. Best chunk result: {'n_estimators': 50, 'max_depth': 15} -> Accuracy: 1.0",
+  "Tested 2 configs. Best chunk result: {'n_estimators': 100, 'max_depth': 10} -> Accuracy: 0.9927",
+  "Tested 2 configs. Best chunk result: {'n_estimators': 100, 'max_depth': 15} -> Accuracy: 1.0"
+]

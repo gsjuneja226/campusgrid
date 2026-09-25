@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusGrid - Distributed Campus Computing System</title>
+    <meta name="description"
+        content="CampusGrid is a high-performance distributed computing cluster control panel. Coordinate and monitor scientific algorithms across idle laboratory machines.">
+    <!-- Modern typography from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome or simple inline SVGs for cleaner, offline-capable icons -->
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- SocketIO Client Library -->
+    <script src="/static/socket.io.min.js"></script>
+    <!-- Chart.js CDN for premium analytics visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="light-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-icon">🚀</div>
+                    <div class="logo-text">
+                        <span class="logo-primary">CAMPUS</span>
+                        <span class="logo-secondary">GRID</span>
+                    </div>
+                </div>
+                <div class="cluster-status">
+                    <span class="status-pulse active"></span>
+                    <span id="nodes-online-badge">0 Workers Online</span>
+                </div>
+            
+
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard">
+                    <span>📊 Dashboard</span>
+                </button>
+                <button class="nav-item" data-tab="compute">
+                    <span>⚡ Compute Jobs</span>
+                </button>
+                <button class="nav-item" data-tab="rendering">
+                    <span>🎬 Rendering Hub</span>
+                </button>
+                <button class="nav-item" data-tab="ai">
+                    <span>🧠 AI & LLM Hub</span>
+                </button>
+                <button class="nav-item" data-tab="workers">
+                    <span>💻 Lab Computers</span>
+                    <span class="badge" id="workers-count-badge">0</span>
+                </button>
+                <button class="nav-item" data-tab="history">
+                    <span>📜 Job History</span>
+                </button>
+                <button class="nav-item" data-tab="storage">
+                    <span>🗄️ Storage</span>
+                </button>
+            </nav>
+
+
+            <footer class="sidebar-footer">
+                <div class="footer-system-stats">
+                    <div class="stat-row">
+                        <span>Total Cores</span>
+                        <span id="cluster-cores">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Cluster Memory</span>
+                        <span id="cluster-ram">0 GB</span>
+                    </div>
+                </div>
+            </footer>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <h1 id="page-title">Cluster Dashboard</h1>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div class="system-time" id="live-clock">20:00:00</div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- TAB 1: CONTROL PANEL -->
+                
+                <!-- TAB 1: DASHBOARD OVERVIEW -->
+                <div class="tab-content active" id="tab-dashboard">
+                    <!-- Dashboard keeps telemetry, queue, and active job (the rest of tab-dashboard is untouched) -->
+
+
+
+                    <div class="grid-layout">
+                        
+
+                        <!-- Active Job Stats Panel -->
+                        <div class="card card-glass card-secondary" id="active-job-card">
+                            <div class="card-empty-state" id="job-empty-state">
+                                <div class="empty-icon">☕</div>
+                                <h4>Grid Idle</h4>
+                                <p>Submit a computational job on the left to start parallel execution across the
+                                    laboratory computers.</p>
+                            </div>
+
+                            <div class="job-active-state hidden" id="job-active-state">
+                                <div class="card-header flex-header">
+                                    <div>
+                                        <span class="badge badge-active" id="active-job-badge">RUNNING</span>
+                                        <h3 id="active-job-title">Job Execution</h3>
+                                    </div>
+                                    <div style="display: flex; gap: 12px; align-items: center;">
+                                        <button id="btn-cancel-job" class="btn btn-cancel"
+                                            style="padding: 8px 14px; font-size: 13px; background-color: rgba(255, 23, 68, 0.15); color: var(--color-danger); border: 1px solid rgba(255, 23, 68, 0.3); border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;">
+                                            Cancel Run
+                                        </button>
+                                        <div class="live-speedup-badge" id="live-speedup-indicator">
+                                            <span class="speedup-val" id="active-job-live-speedup">1.0x</span>
+                                            <span class="speedup-label">speedup</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="performance-metrics">
+                                        <div class="metric-box">
+                                            <span class="label">Time Elapsed</span>
+                                            <span class="value" id="active-job-elapsed">0.0s</span>
+                                        </div>
+                                        <div class="metric-box">
+                                            <span class="label">Est. Remaining</span>
+                                            <span class="value" id="active-job-remaining">0.0s</span>
+                                        </div>
+                                        <div class="metric-box">
+                                            <span class="label">Progress</span>
+                                            <span class="value" id="active-job-progress-val">0%</span>
+                                        </div>
+                                        <div class="metric-box">
+                                            <span class="label">Chunks Done</span>
+                                            <span class="value" id="active-job-chunks-ratio">0/0</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="overall-progress-bar-container">
+                                        <div class="overall-progress-bar" id="active-job-progress-bar"
+                                            style="width: 0%;"></div>
+                                    </div>
+
+                                    <div class="chunks-panel-header">
+                                        <h4>Chunk Execution Grid</h4>
+                                    </div>
+                                    <!-- List of parallel chunks and their statuses -->
+                                    <div class="chunks-list" id="active-job-chunks-list">
+                                        <!-- Dynamic items here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cluster Telemetry Card -->
+                        <div class="card card-glass card-secondary animate-fade-in" id="telemetry-card" style="border-top: 4px solid var(--color-primary);">
+                            <div class="card-header flex-header" style="margin-bottom: 12px;">
+                                <div>
+                                    <h3>📈 Cluster Telemetry & Resource Utilization</h3>
+                                    <p style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Live average CPU and RAM consumption across all online computer nodes.</p>
+                                </div>
+                                <div style="display: flex; gap: 16px; font-size: 13px;">
+                                    <div>Avg CPU: <span id="chart-avg-cpu" style="font-weight: 700; color: #7c4dff;">0%</span></div>
+                                    <div>Avg RAM: <span id="chart-avg-ram" style="font-weight: 700; color: #2979ff;">0%</span></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="position: relative; height: 180px; width: 100%;">
+                                    <canvas id="cluster-telemetry-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Queue Card -->
+                        <div class="card card-glass card-secondary" id="job-queue-card"
+                            style="margin-top: 20px; border-top: 4px solid var(--color-accent);">
+                            <div class="card-header flex-header" style="margin-bottom: 12px;">
+                                <div>
+                                    <h3>📋 Scheduled Job Queue</h3>
+                                    <p style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Pending
+                                        computational tasks waiting for cluster resources.</p>
+                                </div>
+                                <span class="badge" id="queue-count-badge"
+                                    style="background-color: rgba(255,255,255,0.05); color: var(--text-secondary); border: 1px solid var(--border-color);">0
+                                    Queued</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="queue-empty-state" id="queue-empty-state"
+                                    style="padding: 20px; text-align: center; color: var(--text-muted);">
+                                    <span style="font-size: 24px; display: block; margin-bottom: 8px;">⏳</span>
+                                    <span>Queue is currently empty.</span>
+                                </div>
+                                <div class="queue-list hidden" id="queue-list"
+                                    style="display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; padding-right: 4px;">
+                                    <!-- Dynamic queued items go here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final Result Modal/Panel -->
+                    <div class="card card-result card-success hidden animate-scale-up" id="final-result-card">
+                        <div class="card-header flex-header">
+                            <div>
+                                <span class="badge badge-success">✅ JOB COMPLETED SUCCESSFULLY</span>
+                                <h3 id="result-job-title">Prime Number Finder Complete</h3>
+                            </div>
+                            <div>
+                                <a href="#" id="btn-download-result" class="btn btn-download">
+                                    <span>Download Full Dataset</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="result-stats-row">
+                                <div class="stat-card">
+                                    <span class="stat-label">Parallel execution time</span>
+                                    <span class="stat-value text-glow-green" id="result-parallel-time">4.2s</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Single machine estimate</span>
+                                    <span class="stat-value" id="result-single-time">38.7s</span>
+                                </div>
+                                <div class="stat-card highlight-card">
+                                    <span class="stat-label">Actual Speedup Factor</span>
+                                    <span class="stat-value text-glow-blue" id="result-speedup">9.2x</span>
+                                    <span class="stat-tag">🚀 Faster</span>
+                                </div>
+                            </div>
+                            <div class="result-console-header">Result Output log</div>
+                            <pre class="result-console" id="result-console-output">Loading results...</pre>
+                        </div>
+                    </div>
+
+                    
+                    <!-- Live Grid Activity Console -->
+                    <div class="card card-dark animate-fade-in" style="margin-top: 28px; border-top: 4px solid #00e676; background-color: #0b0f19;">
+                        <div class="card-header flex-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px; margin-bottom: 12px;">
+                            <div>
+                                <h3 style="color: #00e676; font-family: var(--font-mono); font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                                    <span>💻 Live Grid Activity Console</span>
+                                </h3>
+                                <p style="font-size: 11px; color: #8c9ba5; margin-top: 4px; font-family: var(--font-mono);">Real-time scheduling, fault tolerance, and execution events from coordinator nodes.</p>
+                            </div>
+                            <button id="clear-console-btn" class="btn" style="padding: 4px 10px; font-size: 11px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #adbac7; border-radius: 6px; cursor: pointer;">Clear Console</button>
+                        </div>
+                        <div class="card-body" style="padding: 0;">
+                            <pre id="live-log-console" style="height: 180px; overflow-y: auto; font-family: var(--font-mono); font-size: 12px; color: #adbac7; line-height: 1.6; margin: 0; background: none; padding: 12px; white-space: pre-wrap; word-break: break-all;"></pre>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- TAB: COMPUTE JOBS -->
+                </div>
+<div class="tab-content hidden" id="tab-compute">
+                    <div class="card card-primary animate-fade-in" style="margin-bottom: 28px;">
+                        <div class="card-header">
+                            <h3>⚡ Submit Standard Compute Job</h3>
+                            <p style="font-size:12px; color:var(--text-secondary);">Execute pure mathematical and data processing algorithms across the cluster.</p>
+                        </div>
+                        <div class="card-body">
+                            <form id="job-submission-form">
+                                
+                                <div class="job-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                                        <!-- Data Science & Math -->
+                                        <div class="job-card" onclick="selectJobType('prime_finder', this)">
+                                            <div class="icon">🔢</div>
+                                            <h4>Prime Number Finder</h4>
+                                            <p>Range Parallel computation</p>
+                                        </div>
+                                        <div class="job-card" onclick="selectJobType('monte_carlo_pi', this)">
+                                            <div class="icon">🎯</div>
+                                            <h4>Monte Carlo Pi</h4>
+                                            <p>Iteration Parallel estimation</p>
+                                        </div>
+                                        <div class="job-card" onclick="selectJobType('matrix_multiply', this)">
+                                            <div class="icon">🧮</div>
+                                            <h4>Matrix Multiply</h4>
+                                            <p>Data Row Split computation</p>
+                                        </div>
+                                        
+                                        <!-- Processing -->
+                                        <div class="job-card" onclick="selectJobType('word_count', this)">
+                                            <div class="icon">📝</div>
+                                            <h4>Document Word Count</h4>
+                                            <p>Text Chunk Split frequency</p>
+                                        </div>
+                                        <div class="job-card" onclick="selectJobType('process_logs', this)">
+                                            <div class="icon">📊</div>
+                                            <h4>Server Log Analyzer</h4>
+                                            <p>Process 42k request lines</p>
+                                        </div>
+                                        <div class="job-card" onclick="selectJobType('process_portrait', this)">
+                                            <div class="icon">🖼️</div>
+                                            <h4>Gaussian Portrait Blur</h4>
+                                            <p>Real-world Image Processing</p>
+                                        </div>
+                                        
+                                        <!-- Machine Learning -->
+                                        <div class="job-card" onclick="selectJobType('federated_learning', this)">
+                                            <div class="icon">🤖</div>
+                                            <h4>Federated AI Training</h4>
+                                            <p>Privacy-focused ML</p>
+                                        </div>
+                                        <div class="job-card" onclick="selectJobType('grid_search_rf', this)">
+                                            <div class="icon">🌲</div>
+                                            <h4>Random Forest Search</h4>
+                                            <p>Hyperparameter Grid Search</p>
+                                        </div>
+                                        
+                                        <!-- Misc -->
+                                        <div class="job-card" onclick="selectJobType('custom_script', this)">
+                                            <div class="icon">📜</div>
+                                            <h4>Custom Python Script</h4>
+                                            <p>Run your own code</p>
+                                        </div>
+
+                                        <!-- AI & Rendering -->
+                                        <div class="job-card" onclick="selectJobType('llm_inference', this)">
+                                            <div class="icon">🧠</div>
+                                            <h4>Distributed LLM Inference</h4>
+                                            <p>DeepSeek / Llama Reasoning</p>
+                                        </div>
+                                        <div class="job-card" onclick="selectJobType('distributed_render', this)">
+                                            <div class="icon">🌈</div>
+                                            <h4>Procedural Render Farm</h4>
+                                            <p>Plasma / Mandelbrot / Aurora</p>
+                                        </div>
+                                        <div class="job-card" onclick="selectJobType('render_frames', this)">
+                                            <div class="icon">🎞️</div>
+                                            <h4>Render Frames</h4>
+                                            <p>Animation rendering simulation</p>
+                                        </div>
+                                        <div class="job-card" onclick="selectJobType('blur_images', this)">
+                                            <div class="icon">🌆</div>
+                                            <h4>Batch Image Blur</h4>
+                                            <p>5x5 Box Blur Convolution</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <style>
+                                        .job-card {
+                                            background: rgba(255, 255, 255, 0.03);
+                                            border: 1px solid var(--border-color);
+                                            border-radius: 12px;
+                                            padding: 16px;
+                                            cursor: pointer;
+                                            transition: all 0.2s ease;
+                                        }
+                                        .job-card:hover {
+                                            background: rgba(255, 255, 255, 0.08);
+                                            transform: translateY(-2px);
+                                            border-color: var(--color-primary);
+                                        }
+                                        .job-card.selected {
+                                            background: rgba(0, 255, 204, 0.1);
+                                            border-color: var(--color-primary);
+                                            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+                                        }
+                                        .job-card .icon {
+                                            font-size: 24px;
+                                            margin-bottom: 8px;
+                                        }
+                                        .job-card h4 {
+                                            font-size: 14px;
+                                            font-weight: 700;
+                                            margin-bottom: 4px;
+                                            color: var(--text-primary);
+                                        }
+                                        .job-card p {
+                                            font-size: 12px;
+                                            color: var(--text-secondary);
+                                        }
+                                    </style>
+                                    
+                                    <script>
+                                        function selectJobType(type, element) {
+                                            // Update hidden select
+                                            const select = document.getElementById('job-type-select');
+                                            select.value = type;
+                                            // Trigger change event for app.js
+                                            select.dispatchEvent(new Event('change'));
+                                            
+                                            // Update visual selection
+                                            document.querySelectorAll('.job-card').forEach(c => c.classList.remove('selected'));
+                                            element.classList.add('selected');
+                                        }
+                                    </script>
+
+<div class="form-group" style="display: none;">
+                                        <label for="job-type-select">Computational Job Type</label>
+                                        <select id="job-type-select" name="job_type" required>
+                                            <option value="prime_finder" selected>Prime Number Finder (Range Parallel)</option>
+                                            <option value="monte_carlo_pi">Monte Carlo Pi Estimation (Iteration Parallel)</option>
+                                            <option value="matrix_multiply">Matrix Multiplication (Data Row Split)</option>
+                                            <option value="word_count">Document Word Frequency Count (Text Chunk Split)</option>
+                                            <option value="distributed_render">🎬 Procedural Render Farm (Plasma/Mandelbrot/Aurora)</option>
+                                            <option value="render_frames">Animation Frames Rendering (Workload Simulation)</option>
+                                            <option value="blur_images">Batch Image Blur Convolution (5x5 Box Blur)</option>
+                                            <option value="process_portrait">Gaussian Portrait Blur (Real-world Image Processing)</option>
+                                            <option value="federated_learning">Federated AI Training (Privacy-focused ML)</option>
+                                            <option value="grid_search_rf">Random Forest Hyperparameter Search</option>
+                                            <option value="process_logs">Server Log Request Analyzer (42k log lines)</option>
+                                            <option value="custom_script">Run Custom Python Script</option>
+                                            <option value="llm_inference">🧠 Distributed LLM Inference (Ollama — DeepSeek-R1 / Llama / Qwen)</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Job Parameter Sub-forms -->
+                                    <div class="parameter-section" id="params-prime_finder">
+                                        <div class="form-row">
+                                            <div class="form-group col-6">
+                                                <label for="prime-start">Range Start</label>
+                                                <input type="number" id="prime-start" name="prime_start" value="1"
+                                                    min="1">
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="prime-end">Range End</label>
+                                                <input type="number" id="prime-end" name="prime_end" value="1000000"
+                                                    min="2">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-monte_carlo_pi">
+                                        <div class="form-group">
+                                            <label for="iterations-count">Sampling Iterations</label>
+                                            <input type="number" id="iterations-count" name="iterations"
+                                                value="10000000" min="1000">
+                                            <small class="helper-text">Recommended iterations: 10M across 10 workers for
+                                                strong precision</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-matrix_multiply">
+                                        <div class="form-group">
+                                            <label for="matrix-size-input">Matrix Dimension Size (N x N)</label>
+                                            <input type="number" id="matrix-size-input" name="matrix_size" value="500"
+                                                min="10" max="1500">
+                                            <small class="helper-text">Generated matrices A and B sizes: N rows by N
+                                                columns</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-word_count">
+                                        <div class="form-group">
+                                            <label>Text Corpus</label>
+                                            <textarea disabled
+                                                class="textarea-mock">Auto-generated paragraphs of CampusGrid System Documentation (~15,000 paragraphs, 2.5MB textual dataset).</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-distributed_render">
+                                        <div class="form-row">
+                                            <div class="form-group col-6">
+                                                <label for="render-scene-select">Animation Scene</label>
+                                                <select id="render-scene-select" name="scene">
+                                                    <option value="plasma_wave" selected>🌈 Plasma Wave Interference</option>
+                                                    <option value="mandelbrot">🔵 Mandelbrot Zoom</option>
+                                                    <option value="aurora">🌌 Aurora Borealis</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="render-frames-count">Total Frames</label>
+                                                <select id="render-frames-count" name="total_frames">
+                                                    <option value="60">60 frames (2.5 sec @ 24fps)</option>
+                                                    <option value="120" selected>120 frames (5 sec @ 24fps)</option>
+                                                    <option value="240">240 frames (10 sec @ 24fps)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <small class="helper-text">✨ Workers render real frames with Pillow. Master stitches them into a playable MP4!</small>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-render_frames">
+                                        <div class="form-group">
+                                            <label>Animation Frames Rendering</label>
+                                            <textarea disabled class="textarea-mock">Simulates rendering a 120-frame 3D animation. Each worker computes a slice of frames using heavy float matrix multiplication to simulate rendering load.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-blur_images">
+                                        <div class="form-group">
+                                            <label>Batch Image Blur Convolution</label>
+                                            <textarea disabled class="textarea-mock">Processes a batch of 24 synthetic images. Workers perform a 5x5 Box Blur convolution in parallel, generate PNG files using Pillow, and save them to the results directory.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-process_portrait">
+                                        <div class="form-group">
+                                            <label>Gaussian Portrait Blur</label>
+                                            <textarea disabled class="textarea-mock">Applies Gaussian Blur filters to a real portrait image. Each worker applies a different blur radius (Radius 2, 6, 12, 20) and outputs a real PNG.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-federated_learning">
+                                        <div class="form-group">
+                                            <label>Federated AI Training</label>
+                                            <textarea disabled class="textarea-mock">Simulates Federated Learning. Workers load private local partitions of a global 4000-sample classification dataset, train an SGDClassifier (Logistic Regression), evaluate local accuracy, and return the learned model weights and biases to the master node.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-grid_search_rf">
+                                        <div class="form-group">
+                                            <label>Random Forest Hyperparameter Search</label>
+                                            <textarea disabled class="textarea-mock">Searches hyperparameter space for a Random Forest classifier. Workers train multiple models concurrently on their slice of hyperparameter combinations and report the best performing configurations.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-process_logs">
+                                        <div class="form-group">
+                                            <label>Log Parsing & Analysis</label>
+                                            <textarea disabled class="textarea-mock">Processes a simulated server request log file with ~42,000 lines. Workers count HTTP status code frequencies (200, 401, 403, 500) on their allocated chunks.</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-llm_inference">
+                                        <div style="background:linear-gradient(135deg,rgba(0,200,150,0.07),rgba(0,100,200,0.07));border:1px solid rgba(0,200,150,0.25);border-radius:12px;padding:16px;margin-bottom:14px;">
+                                            <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#00c896;text-transform:uppercase;margin-bottom:6px;">🧠 Distributed LLM Inference</div>
+                                            <p style="font-size:12px;color:var(--text-secondary);margin:0;">Workers call their local <strong>Ollama</strong> instance. Each worker uses its own GPU/RAM to run the model — compute is truly distributed across the cluster.</p>
+                                        </div>
+                                        <div class="form-row" style="gap:12px;">
+                                            <div class="form-group" style="flex:1;">
+                                                <label for="llm-model-input">🤖 Model Name (Ollama)</label>
+                                                <select id="llm-model-input" name="llm_model">
+                                                    <option value="deepseek-r1:7b" selected>deepseek-r1:7b — Reasoning (4GB VRAM)</option>
+                                                    <option value="deepseek-r1:14b">deepseek-r1:14b — Deep Reasoning (8GB VRAM)</option>
+                                                    <option value="deepseek-r1:32b">deepseek-r1:32b — Heavy Reasoning (16GB VRAM)</option>
+                                                    <option value="qwen3:8b">qwen3:8b — Fast Reasoning (5GB VRAM)</option>
+                                                    <option value="llama3.1:8b">llama3.1:8b — General Purpose (5GB VRAM)</option>
+                                                    <option value="mistral:7b">mistral:7b — Fast General (4GB VRAM)</option>
+                                                </select>
+                                                <small class="helper-text">Must be pulled on each worker: <code>ollama pull deepseek-r1:7b</code></small>
+                                            </div>
+                                            <div class="form-group" style="flex:0 0 200px;">
+                                                <label for="llm-mode-select">🔀 Inference Mode</label>
+                                                <select id="llm-mode-select" name="llm_mode" onchange="onLLMModeChange(this.value)">
+                                                    <option value="ensemble" selected>🎯 Ensemble Reasoning</option>
+                                                    <option value="batch_qa">📋 Batch Q&amp;A</option>
+                                                    <option value="document">📄 Document Analysis</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- Ensemble mode -->
+                                        <div id="llm-ensemble-fields">
+                                            <div class="form-group">
+                                                <label for="llm-prompt-input">💬 Prompt (all workers reason independently)</label>
+                                                <textarea id="llm-prompt-input" name="prompt" rows="4" placeholder="e.g. Explain the implications of P vs NP being resolved. What would change in cryptography, AI, and computing?" style="width:100%;resize:vertical;"></textarea>
+                                                <small class="helper-text">Each worker takes a different reasoning path (step-by-step, analytical, multi-perspective, etc.) and returns its own answer. Compare results!</small>
+                                            </div>
+                                        </div>
+                                        <!-- Batch Q&A mode -->
+                                        <div id="llm-batchqa-fields" class="hidden">
+                                            <div class="form-group">
+                                                <label for="llm-questions-input">📋 Questions (one per line)</label>
+                                                <textarea id="llm-questions-input" name="questions" rows="6" placeholder="What is quantum entanglement?&#10;How does backpropagation work?&#10;Explain the CAP theorem in distributed systems." style="width:100%;resize:vertical;"></textarea>
+                                                <small class="helper-text">Workers split the list — each worker answers its own subset of questions in parallel.</small>
+                                            </div>
+                                        </div>
+                                        <!-- Document mode -->
+                                        <div id="llm-document-fields" class="hidden">
+                                            <div class="form-group">
+                                                <label for="llm-document-input">📄 Document Text (workers split &amp; summarise)</label>
+                                                <textarea id="llm-document-input" name="document" rows="8" placeholder="Paste a long document, research paper, article, or report here. Workers will split it into sections and each summarise their section in parallel..." style="width:100%;resize:vertical;"></textarea>
+                                                <small class="helper-text">The document is split by character count across workers. Each worker summarises its section, master combines.</small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="llm-ollama-url">🔌 Ollama URL (per worker)</label>
+                                            <input type="text" id="llm-ollama-url" name="ollama_url" value="http://localhost:11434" placeholder="http://localhost:11434">
+                                            <small class="helper-text">Workers call Ollama on their own machine at this address. Change only if Ollama runs on a different port.</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="parameter-section hidden" id="params-custom_script">
+                                        <div class="form-group">
+                                            <label for="custom-file-input">Select Python Script File (.py)</label>
+                                            <input type="file" id="custom-file-input" name="custom_file" accept=".py">
+                                            <small class="helper-text">Upload a custom .py script to execute on the
+                                                cluster. Standard output and returns will be captured.</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-12">
+                                            <label for="chunks-select">Job Subdivision Chunks</label>
+                                            <select id="chunks-select" name="chunks">
+                                                <option value="" selected>Auto (Distribute evenly over all online
+                                                    computers)</option>
+                                                <option value="4">4 Equal Chunks</option>
+                                                <option value="8">8 Equal Chunks</option>
+                                                <option value="10">10 Equal Chunks</option>
+                                                <option value="16">16 Equal Chunks</option>
+                                                <option value="20">20 Equal Chunks</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-submit" id="btn-submit-job">
+                                        <span class="btn-text">Execute on Cluster Grid</span>
+                                        <span class="btn-glow"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <!-- TAB: RENDERING HUB -->
+                <div class="tab-content hidden" id="tab-rendering">
+                    <!-- ═══════════════════════════════════════════════════════════ -->
+                    <!-- 🎬 RENDER FARM VIDEO OUTPUT PANEL                         -->
+                    <!-- ═══════════════════════════════════════════════════════════ -->
+                    <div id="render-output-panel" class="hidden" style="margin-top: 28px;">
+                        <div class="card animate-fade-in" style="border: 1px solid rgba(124,77,255,0.4); background: linear-gradient(135deg, rgba(20,10,40,0.95) 0%, rgba(10,5,30,0.98) 100%); border-top: 4px solid #7c4dff; position: relative; overflow: hidden;">
+                            <!-- Animated bg glow -->
+                            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top left, rgba(124,77,255,0.08) 0%, transparent 60%);pointer-events:none;"></div>
+                            <div class="card-header flex-header" style="position:relative;z-index:1;">
+                                <div>
+                                    <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:#7c4dff;text-transform:uppercase;">✨ Render Farm Output</span>
+                                    <h3 id="render-panel-title" style="color:#e8d5ff;margin-top:4px;">Distributed Render Complete</h3>
+                                    <p id="render-panel-subtitle" style="font-size:12px;color:#9a85c7;margin-top:2px;"></p>
+                                </div>
+                                <div style="display:flex;gap:10px;align-items:center;">
+                                    <div style="text-align:right;">
+                                        <div style="font-size:11px;color:#7c4dff;font-weight:600;">RENDERED FRAMES</div>
+                                        <div id="render-frame-count" style="font-size:28px;font-weight:800;color:#e8d5ff;font-family:var(--font-mono);">0</div>
+                                    </div>
+                                </div>
+                    <!-- ═══════════════════════════════════════════════════════════ -->
+                    <!-- 🎬 VIDEO INTERCEPTOR PANEL                                 -->
+                    <!-- ═══════════════════════════════════════════════════════════ -->
+                    <div id="video-interceptor-panel" style="margin-top: 28px;">
+                        <div class="card animate-fade-in" style="border: 1px solid rgba(255,150,0,0.3); background: linear-gradient(135deg, rgba(25,15,5,0.97) 0%, rgba(15,8,3,0.99) 100%); border-top: 4px solid #ff9800; position: relative; overflow: hidden;">
+                            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top right, rgba(255,152,0,0.07) 0%, transparent 60%);pointer-events:none;"></div>
+                            <div class="card-header" style="position:relative;z-index:1;padding-bottom:0;">
+                                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                                    <div>
+                                        <span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#ff9800;text-transform:uppercase;">🔥 Real Application Integration</span>
+                                        <h3 style="color:#ffe0b2;margin-top:4px;">🎬 Video Interceptor &amp; Distributed Processor</h3>
+                                        <p style="font-size:12px;color:#c7a87a;margin-top:3px;">Export from <strong>Clipchamp, DaVinci Resolve, Premiere, Vegas</strong> — drop the file here and distribute the effect across your cluster.</p>
+                                    </div>
+                                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                                        <span style="background:rgba(255,152,0,0.15);color:#ff9800;border:1px solid rgba(255,152,0,0.3);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">FFMPEG POWERED</span>
+                                        <span style="font-size:11px;color:#8a6f4e;">Splits · Distributes · Stitches</span>
+                                    </div>
+                                </div>
+                            </div>
+                    <!-- ═══════════════════════════════════════════════════════════ -->
+                    <!-- 🔵 BLENDER RENDER FARM PANEL                               -->
+                    <!-- ═══════════════════════════════════════════════════════════ -->
+                    <div id="blender-farm-panel" style="margin-top: 28px;">
+                        <div class="card animate-fade-in" style="border: 1px solid rgba(0,150,255,0.3); background: linear-gradient(135deg, rgba(5,12,25,0.97) 0%, rgba(3,8,18,0.99) 100%); border-top: 4px solid #2979ff; position: relative; overflow: hidden;">
+                            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at bottom left, rgba(41,121,255,0.07) 0%, transparent 60%);pointer-events:none;"></div>
+                            <div class="card-header" style="position:relative;z-index:1;padding-bottom:0;">
+                                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                                    <div>
+                                        <span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#2979ff;text-transform:uppercase;">🎨 Professional Render Farm</span>
+                                        <h3 style="color:#bbdefb;margin-top:4px;">🔵 Blender Distributed Render Farm</h3>
+                                        <p style="font-size:12px;color:#7ba7d8;margin-top:3px;">Upload a <strong>.blend</strong> file — CampusGrid ships it to every worker laptop and renders frames in parallel using <strong>Blender's CLI</strong>. Exactly how Deadline &amp; Flamenco work.</p>
+                                    </div>
+                                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                                        <span style="background:rgba(41,121,255,0.15);color:#2979ff;border:1px solid rgba(41,121,255,0.3);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">BLENDER CLI</span>
+                                        <span style="font-size:11px;color:#5a7a9e;">Requires Blender installed on each worker</span>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+
+                <!-- TAB: AI & LLM -->
+                            </div>
+                            <div class="card-body" style="position:relative;z-index:1;">
+                                <!-- Live Frame Gallery -->
+                                <div style="margin-bottom:20px;">
+                                    <div style="font-size:11px;font-weight:700;color:#7c4dff;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">📸 Live Frame Preview Gallery</div>
+                                    <div id="frame-gallery" style="display:flex;flex-wrap:wrap;gap:8px;min-height:80px;align-items:flex-start;padding:12px;background:rgba(0,0,0,0.3);border-radius:10px;border:1px solid rgba(124,77,255,0.2);">
+                                        <div style="color:#6b5b9e;font-size:13px;display:flex;align-items:center;gap:8px;width:100%;justify-content:center;padding:20px 0;" id="gallery-empty-msg">
+                                            <span style="animation:pulse 2s infinite;">⏳</span> Waiting for frames from workers...
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Video Player -->
+                                <div id="render-video-section" class="hidden">
+                                    <div style="font-size:11px;font-weight:700;color:#00e676;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">🎥 Final Output Video</div>
+                                    <div style="background:#000;border-radius:12px;overflow:hidden;border:2px solid rgba(0,230,118,0.4);box-shadow:0 0 40px rgba(0,230,118,0.15);">
+                                        <video id="render-video-player" controls style="width:100%;display:block;max-height:400px;"></video>
+                                    </div>
+                                    <div style="display:flex;gap:12px;margin-top:12px;align-items:center;">
+                                        <a id="render-video-download" href="#" download style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(0,230,118,0.15);color:#00e676;border:1px solid rgba(0,230,118,0.3);border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">⬇ Download MP4</a>
+                                        <span id="render-speedup-badge" style="font-size:13px;color:#7c4dff;font-weight:700;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                            <div class="card-body" style="position:relative;z-index:1;">
+                                <form id="video-interceptor-form" enctype="multipart/form-data">
+                                    <!-- Dropzone -->
+                                    <div id="video-dropzone" style="border:2px dashed rgba(255,152,0,0.4);border-radius:14px;padding:32px 24px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(255,152,0,0.04);margin-bottom:18px;"
+                                        onclick="document.getElementById('video-file-input').click()"
+                                        ondragover="event.preventDefault();this.style.borderColor='#ff9800';this.style.background='rgba(255,152,0,0.1)'"
+                                        ondragleave="this.style.borderColor='rgba(255,152,0,0.4)';this.style.background='rgba(255,152,0,0.04)'"
+                                        ondrop="handleVideoDrop(event)">
+                                        <div style="font-size:40px;margin-bottom:10px;line-height:1;">🎞️</div>
+                                        <div style="font-size:15px;font-weight:700;color:#ffe0b2;margin-bottom:6px;">Drag &amp; Drop Your Video Here</div>
+                                        <div id="video-file-label" style="font-size:13px;color:#c7a87a;">or click to browse — supports .mp4 .mov .avi .mkv .webm and more</div>
+                                        <input type="file" id="video-file-input" name="video_file" accept="video/*,.mkv,.avi,.mov,.mp4,.webm,.wmv" style="display:none;" onchange="onVideoFileSelected(this)">
+                                    </div>
+                                    <!-- Effect + Workers Row -->
+                                    <div class="form-row" style="gap:14px;">
+                                        <div class="form-group" style="flex:1;">
+                                            <label for="video-effect-select">🎨 Apply Effect</label>
+                                            <select id="video-effect-select" name="effect">
+                                                <option value="cinematic_grade">🎬 Cinematic Grade (Color LUT + Vignette + Grain)</option>
+                                                <option value="film_noir">⚫ Film Noir (B&amp;W + High Contrast)</option>
+                                                <option value="neon_glow">💜 Neon Glow (Oversaturated + Bloom)</option>
+                                                <option value="stabilize_blur">🎯 Smart Sharpen (Unsharp + Edge Enhance)</option>
+                                                <option value="upscale_4k">📺 4K Upscale Simulation (Bicubic + Sharpen)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="flex:0 0 160px;">
+                                            <label for="video-segments-select">🖥️ Split Into</label>
+                                            <select id="video-segments-select" name="segments">
+                                                <option value="">Auto (1 per worker)</option>
+                                                <option value="2">2 segments</option>
+                                                <option value="3">3 segments</option>
+                                                <option value="4">4 segments</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="submit" id="btn-intercept-video" class="btn btn-submit" style="width:100%;background:linear-gradient(135deg,#ff9800,#f44336);border:none;margin-top:8px;" disabled>
+                                        <span class="btn-text">🚀 Intercept &amp; Distribute Across Cluster</span>
+                                        <span class="btn-glow"></span>
+                                    </button>
+                                </form>
+                                <!-- Progress Section -->
+                                <div id="video-processing-progress" class="hidden" style="margin-top:20px;padding:16px;background:rgba(0,0,0,0.3);border-radius:10px;border:1px solid rgba(255,152,0,0.2);">
+                                    <div style="font-size:12px;color:#ff9800;font-weight:700;margin-bottom:10px;">⚡ DISTRIBUTING ACROSS CLUSTER...</div>
+                                    <div id="video-worker-progress-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+                                </div>
+                                <!-- Output Section -->
+                                <div id="video-output-section" class="hidden" style="margin-top:20px;">
+                                    <div style="font-size:11px;font-weight:700;color:#00e676;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">✅ Processed Output</div>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                                        <div>
+                                            <div style="font-size:11px;color:#8a8a8a;margin-bottom:6px;">ORIGINAL</div>
+                                            <video id="video-original-preview" controls style="width:100%;border-radius:8px;background:#000;border:1px solid rgba(255,255,255,0.1);"></video>
+                                        </div>
+                                        <div>
+                                            <div style="font-size:11px;color:#00e676;margin-bottom:6px;">PROCESSED OUTPUT</div>
+                                            <video id="video-processed-preview" controls style="width:100%;border-radius:8px;background:#000;border:2px solid rgba(0,230,118,0.4);box-shadow:0 0 20px rgba(0,230,118,0.1);"></video>
+                                        </div>
+                                    </div>
+                                    <div id="video-speedup-info" style="margin-top:12px;text-align:center;font-size:14px;font-weight:700;color:#7c4dff;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                            <div class="card-body" style="position:relative;z-index:1;">
+                                <form id="blender-farm-form" enctype="multipart/form-data">
+                                    <!-- Blend File Dropzone -->
+                                    <div id="blend-dropzone" style="border:2px dashed rgba(41,121,255,0.4);border-radius:14px;padding:28px 24px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(41,121,255,0.04);margin-bottom:18px;"
+                                        onclick="document.getElementById('blend-file-input').click()"
+                                        ondragover="event.preventDefault();this.style.borderColor='#2979ff';this.style.background='rgba(41,121,255,0.1)'"
+                                        ondragleave="this.style.borderColor='rgba(41,121,255,0.4)';this.style.background='rgba(41,121,255,0.04)'"
+                                        ondrop="handleBlendDrop(event)">
+                                        <div style="font-size:36px;margin-bottom:8px;">📦</div>
+                                        <div style="font-size:14px;font-weight:700;color:#bbdefb;margin-bottom:5px;">Drop your .blend file here</div>
+                                        <div id="blend-file-label" style="font-size:12px;color:#7ba7d8;">or click to browse — Blender 3.x / 4.x files supported</div>
+                                        <input type="file" id="blend-file-input" name="blend_file" accept=".blend" style="display:none;" onchange="onBlendFileSelected(this)">
+                                    </div>
+                                    <!-- Settings Row -->
+                                    <div class="form-row" style="gap:12px;flex-wrap:wrap;">
+                                        <div class="form-group" style="flex:1;min-width:120px;">
+                                            <label for="blend-frame-start">Frame Start</label>
+                                            <input type="number" id="blend-frame-start" name="frame_start" value="1" min="1">
+                                        </div>
+                                        <div class="form-group" style="flex:1;min-width:120px;">
+                                            <label for="blend-frame-end">Frame End</label>
+                                            <input type="number" id="blend-frame-end" name="frame_end" value="120" min="1">
+                                        </div>
+                                        <div class="form-group" style="flex:1;min-width:140px;">
+                                            <label for="blend-engine-select">Render Engine</label>
+                                            <select id="blend-engine-select" name="render_engine">
+                                                <option value="WORKBENCH">WORKBENCH (Fast)</option>
+                                                <option value="EEVEE">EEVEE (Balanced)</option>
+                                                <option value="CYCLES">CYCLES (Photorealistic)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="flex:1;min-width:110px;">
+                                            <label for="blend-samples">Samples</label>
+                                            <input type="number" id="blend-samples" name="samples" value="32" min="1" max="1024">
+                                        </div>
+                                    </div>
+                                    <button type="submit" id="btn-blender-submit" class="btn btn-submit" style="width:100%;background:linear-gradient(135deg,#1565c0,#2979ff);border:none;margin-top:8px;" disabled>
+                                        <span class="btn-text">🚀 Distribute Blender Render Across Cluster</span>
+                                        <span class="btn-glow"></span>
+                                    </button>
+                                </form>
+                                <!-- Blender output video -->
+                                <div id="blender-output-section" class="hidden" style="margin-top:20px;">
+                                    <div style="font-size:11px;font-weight:700;color:#00e676;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">✅ Blender Render Complete</div>
+                                    <div style="background:#000;border-radius:12px;overflow:hidden;border:2px solid rgba(41,121,255,0.5);box-shadow:0 0 40px rgba(41,121,255,0.15);">
+                                        <video id="blender-video-player" controls style="width:100%;display:block;max-height:380px;"></video>
+                                    </div>
+                                    <div id="blender-speedup-info" style="margin-top:10px;text-align:center;font-size:14px;font-weight:700;color:#2979ff;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- end tab-rendering -->
+                <div class="tab-content hidden" id="tab-ai">
+                    <!-- ═══════════════════════════════════════════════════════════ -->
+                    <!-- 🧠 LLM INFERENCE LIVE OUTPUT PANEL                         -->
+                    <!-- ═══════════════════════════════════════════════════════════ -->
+                    <div id="llm-output-panel" class="hidden" style="margin-top: 28px;">
+                        <div class="card animate-fade-in" style="border: 1px solid rgba(0,200,150,0.35); background: linear-gradient(135deg, rgba(0,15,12,0.97) 0%, rgba(0,8,6,0.99) 100%); border-top: 4px solid #00c896; position: relative; overflow: hidden;">
+                            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at top left, rgba(0,200,150,0.07) 0%, transparent 60%);pointer-events:none;"></div>
+                            <div class="card-header" style="position:relative;z-index:1;">
+                                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                                    <div>
+                                        <span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#00c896;text-transform:uppercase;">🧠 Distributed LLM Inference</span>
+                                        <h3 id="llm-panel-title" style="color:#b2ffe8;margin-top:4px;">Running inference across cluster...</h3>
+                                        <p id="llm-panel-subtitle" style="font-size:12px;color:#5aad8e;margin-top:3px;">Workers are generating tokens using their local Ollama instances</p>
+                                    </div>
+                                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                                        <span id="llm-model-badge" style="background:rgba(0,200,150,0.15);color:#00c896;border:1px solid rgba(0,200,150,0.3);padding:3px 12px;border-radius:20px;font-size:11px;font-weight:700;">deepseek-r1:7b</span>
+                                        <span id="llm-mode-badge" style="font-size:11px;color:#3d7d6a;">Ensemble Reasoning</span>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+
+                <!-- TAB 2: ACTIVE LAB COMPUTERS -->
+                            <div class="card-body" style="position:relative;z-index:1;">
+                                <!-- Worker stream boxes -->
+                                <div id="llm-worker-streams" style="display:flex;flex-direction:column;gap:16px;"></div>
+                                <!-- Final combined output -->
+                                <div id="llm-final-output" class="hidden" style="margin-top:20px;">
+                                    <div style="font-size:11px;font-weight:700;color:#00c896;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">✅ Final Combined Output</div>
+                                    <pre id="llm-final-pre" style="background:rgba(0,0,0,0.4);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:16px;color:#b2ffe8;font-family:var(--font-mono);font-size:12px;white-space:pre-wrap;max-height:500px;overflow-y:auto;"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- end tab-ai -->
+                <div class="tab-content hidden" id="tab-workers">
+                    <div class="workers-tab-header">
+                        <h2>Registered Laboratory Computer Nodes</h2>
+                        <p>Real-time telemetry showing processor load and memory stats streams from active client
+                            agents.</p>
+                    </div>
+
+                    <!-- Laboratory Grid FLOPS Leaderboard -->
+                    <div class="card card-glass card-primary animate-fade-in" id="leaderboard-card"
+                        style="margin-bottom: 28px; border-top: 4px solid var(--color-primary);">
+                        <div class="card-header flex-header" style="margin-bottom: 12px;">
+                            <div>
+                                <h3>🏆 Laboratory Grid FLOPS Leaderboard</h3>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">
+                                    Top-performing computing nodes ranked by NumPy matrix multiplication FLOPS
+                                    performance benchmarks.</p>
+                            </div>
+                            <span class="badge badge-success" id="leaderboard-active-nodes"
+                                style="background-color: rgba(0, 230, 118, 0.15); color: var(--color-success); border: 1px solid rgba(0, 230, 118, 0.2);">0
+                                Nodes Benchmarked</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="leaderboard-empty-state" id="leaderboard-empty-state"
+                                style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 14px;">
+                                <span>No benchmark records found. Run a stress test on registered computer nodes below
+                                    to compile ranks.</span>
+                            </div>
+                            <div class="leaderboard-ranks hidden" id="leaderboard-ranks"
+                                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px;">
+                                <!-- Dynamic leaderboard nodes here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workers-grid" id="workers-cards-container">
+                        <!-- Empty state -->
+                        <div class="card-empty-state w-100" id="workers-empty-state">
+                            <div class="empty-icon">🔌</div>
+                            <h4>No Client Computers Online</h4>
+                            <p>To connect nodes to the cluster, spin them up with: <br><code
+                                    class="console-code">python worker.py --master &lt;MASTER_IP&gt;</code></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: JOB HISTORY -->
+                <div class="tab-content hidden" id="tab-history">
+                    <div class="history-tab-header">
+                        <h2>Cluster Execution Ledger</h2>
+                        <p>Complete historical log of parallel computational runs, processing records, and hardware
+                            speedups.</p>
+                    </div>
+                    <div class="card card-table">
+                        <div class="table-container">
+                            <table class="history-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Job Name</th>
+                                        <th>Algorithm Type</th>
+                                        <th>Workers Deployed</th>
+                                        <th>Parallel Duration</th>
+                                        <th>Single Machine Est.</th>
+                                        <th>Speedup</th>
+                                        <th>Created Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="history-table-body">
+                                    <tr>
+                                        <td colspan="9" class="text-center">Loading execution logs...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: CLUSTER STORAGE & SPECS -->
+                <div class="tab-content hidden" id="tab-storage">
+                    <div class="storage-tab-header">
+                        <h2>Cluster Hardware Architecture</h2>
+                        <p>Detailed analysis of physical specifications, available hardware storage, and OS
+                            distributions across lab machines.</p>
+                    </div>
+
+                    <div class="storage-stats-row">
+                        <div class="summary-stat-box">
+                            <div class="val" id="storage-nodes-count">0</div>
+                            <div class="lbl">Active Nodes</div>
+                        </div>
+                        <div class="summary-stat-box">
+                            <div class="val" id="storage-cores-count">0</div>
+                            <div class="lbl">Total Core Count</div>
+                        </div>
+                        <div class="summary-stat-box">
+                            <div class="val" id="storage-ram-count">0 GB</div>
+                            <div class="lbl">Total Cluster RAM</div>
+                        </div>
+                        <div class="summary-stat-box">
+                            <div class="val" id="storage-disk-count">0.0 TB</div>
+                            <div class="lbl">Cumulative Cluster Storage</div>
+                        </div>
+                    </div>
+
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <h3>Hard Disk Storage & System Specifications</h3>
+                        </div>
+                        <div class="table-container">
+                            <table class="storage-table">
+                                <thead>
+                                    <tr>
+                                        <th>Worker Node ID</th>
+                                        <th>IP Address</th>
+                                        <th>OS System Platform</th>
+                                        <th>CPU Cores</th>
+                                        <th>Memory Capacity</th>
+                                        <th>Disk Storage Space (Total/Free)</th>
+                                        <th>Disk Capacity Meter</th>
+                                        <th>Latency RTT</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="storage-table-body">
+                                    <tr>
+                                        <td colspan="8" class="text-center">No nodes registered.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
+        </main>
+    
+
+    <script src="/static/app.js"></script>
+    <script>
+    // ── Video Interceptor: File Selection & Drop ──────────────────────────────
+    let _selectedVideoFile = null;
+    let _selectedVideoObjectURL = null;
+
+    function onVideoFileSelected(input) {
+        const file = input.files[0];
+        if (!file) return;
+        _selectedVideoFile = file;
+        document.getElementById('video-file-label').textContent = `✅ ${file.name} (${(file.size/1024/1024).toFixed(1)} MB)`;
+        document.getElementById('btn-intercept-video').disabled = false;
+        document.getElementById('video-dropzone').style.borderColor = '#00e676';
+        _selectedVideoObjectURL = URL.createObjectURL(file);
+        const origPlayer = document.getElementById('video-original-preview');
+        origPlayer.src = _selectedVideoObjectURL;
+    }
+
+    function handleVideoDrop(event) {
+        event.preventDefault();
+        const file = event.dataTransfer.files[0];
+        if (!file) return;
+        document.getElementById('video-file-input').files = event.dataTransfer.files;
+        onVideoFileSelected(document.getElementById('video-file-input'));
+        document.getElementById('video-dropzone').style.borderColor = 'rgba(255,152,0,0.4)';
+        document.getElementById('video-dropzone').style.background = 'rgba(255,152,0,0.04)';
+    }
+
+    document.getElementById('video-interceptor-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (!_selectedVideoFile) return;
+
+        const btn = document.getElementById('btn-intercept-video');
+        btn.disabled = true;
+        btn.querySelector('.btn-text').textContent = '⏳ Uploading & Splitting...';
+
+        const formData = new FormData();
+        formData.append('video_file', _selectedVideoFile);
+        formData.append('effect', document.getElementById('video-effect-select').value);
+        const segs = document.getElementById('video-segments-select').value;
+        if (segs) formData.append('segments', segs);
+
+        try {
+            const resp = await fetch('/api/upload_video', { method: 'POST', body: formData });
+            const data = await resp.json();
+            if (data.success) {
+                btn.querySelector('.btn-text').textContent = `⚡ Processing ${data.segments} segments across cluster...`;
+                document.getElementById('video-processing-progress').classList.remove('hidden');
+            } else {
+                alert('Error: ' + data.error);
+                btn.disabled = false;
+                btn.querySelector('.btn-text').textContent = '🚀 Intercept & Distribute Across Cluster';
+            }
+        } catch(err) {
+            alert('Upload failed: ' + err);
+            btn.disabled = false;
+            btn.querySelector('.btn-text').textContent = '🚀 Intercept & Distribute Across Cluster';
+        }
+    });
+
+    // ── Blender Farm: File Selection & Drop ──────────────────────────────────
+    function onBlendFileSelected(input) {
+        const file = input.files[0];
+        if (!file) return;
+        document.getElementById('blend-file-label').textContent = `✅ ${file.name} (${(file.size/1024/1024).toFixed(1)} MB)`;
+        document.getElementById('btn-blender-submit').disabled = false;
+        document.getElementById('blend-dropzone').style.borderColor = '#2979ff';
+    }
+
+    function handleBlendDrop(event) {
+        event.preventDefault();
+        const fi = document.getElementById('blend-file-input');
+        fi.files = event.dataTransfer.files;
+        onBlendFileSelected(fi);
+        document.getElementById('blend-dropzone').style.borderColor = 'rgba(41,121,255,0.4)';
+        document.getElementById('blend-dropzone').style.background = 'rgba(41,121,255,0.04)';
+    }
+
+    document.getElementById('blender-farm-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const fi = document.getElementById('blend-file-input');
+        if (!fi.files[0]) return;
+
+        const btn = document.getElementById('btn-blender-submit');
+        btn.disabled = true;
+        btn.querySelector('.btn-text').textContent = '⏳ Uploading .blend file...';
+
+        const formData = new FormData(this);
+        try {
+            const resp = await fetch('/api/upload_blend', { method: 'POST', body: formData });
+            const data = await resp.json();
+            if (data.success) {
+                btn.querySelector('.btn-text').textContent = '⚡ Rendering across cluster...';
+            } else {
+                alert('Error: ' + data.error);
+                btn.disabled = false;
+                btn.querySelector('.btn-text').textContent = '🚀 Distribute Blender Render Across Cluster';
+            }
+        } catch(err) {
+            alert('Upload failed: ' + err);
+            btn.disabled = false;
+            btn.querySelector('.btn-text').textContent = '🚀 Distribute Blender Render Across Cluster';
+        }
+    });
+
+    // ── SocketIO: Render/Video Events ─────────────────────────────────────────
+    // Show render farm output panel when a distributed_render job completes
+    socket.on('render_video_ready', function(data) {
+        const panel = document.getElementById('render-output-panel');
+        panel.classList.remove('hidden');
+        document.getElementById('render-frame-count').textContent = data.total_frames || '?';
+        document.getElementById('render-panel-subtitle').textContent =
+            `Assembled from ${data.total_frames} frames · rendered in parallel across cluster`;
+
+        const videoUrl = `/api/render_output/${data.filename}`;
+        const vp = document.getElementById('render-video-player');
+        vp.src = videoUrl;
+        document.getElementById('render-video-download').href = videoUrl;
+        document.getElementById('render-video-download').download = data.filename;
+        document.getElementById('render-video-section').classList.remove('hidden');
+        vp.play().catch(() => {});
+
+        // Scroll to panel
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Blender render complete
+    socket.on('render_video_ready', function(data) {
+        // also handle blender via job_complete type check — handled above
+    });
+
+    // Video processing (interceptor) complete
+    socket.on('video_processing_ready', function(data) {
+        const btn = document.getElementById('btn-intercept-video');
+        btn.disabled = false;
+        btn.querySelector('.btn-text').textContent = '🚀 Intercept & Distribute Across Cluster';
+        document.getElementById('video-processing-progress').classList.add('hidden');
+
+        const videoUrl = `/api/render_output/${data.filename}`;
+        document.getElementById('video-processed-preview').src = videoUrl;
+        document.getElementById('video-output-section').classList.remove('hidden');
+        document.getElementById('video-output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Job complete: handle blender render separately to show correct video player
+    socket.on('job_complete', function(data) {
+        if (data.job_type === 'blender_render') {
+            const section = document.getElementById('blender-output-section');
+            section.classList.remove('hidden');
+            // The filename is emitted via render_video_ready — this just shows the section
+        }
+    });
+
+    // Expose frame thumbnails as job chunks complete (for distributed_render)
+    socket.on('job_status', function(data) {
+        if (!data.active || !data.chunks) return;
+        if (data.job_type !== 'distributed_render') return;
+
+        // Show render output panel while rendering
+        document.getElementById('render-output-panel').classList.remove('hidden');
+
+        // Update frame count from completed chunks
+        const completedChunks = data.chunks.filter(c => c.status === 'COMPLETED');
+        if (completedChunks.length > 0) {
+            document.getElementById('gallery-empty-msg').style.display = 'none';
+        }
+    });
+    // ── LLM Inference: Mode Switcher ──────────────────────────────────────────
+    function onLLMModeChange(mode) {
+        document.getElementById('llm-ensemble-fields').classList.add('hidden');
+        document.getElementById('llm-batchqa-fields').classList.add('hidden');
+        document.getElementById('llm-document-fields').classList.add('hidden');
+        if (mode === 'ensemble') document.getElementById('llm-ensemble-fields').classList.remove('hidden');
+        if (mode === 'batch_qa') document.getElementById('llm-batchqa-fields').classList.remove('hidden');
+        if (mode === 'document')  document.getElementById('llm-document-fields').classList.remove('hidden');
+    }
+
+    // ── LLM Inference: Track active job for panel ─────────────────────────────
+    let _llmActiveJobId  = null;
+    let _llmWorkerBoxes  = {};   // chunk_index -> DOM element
+
+    // Show LLM panel when an llm_inference job becomes active
+    const _origJobStatusHandler = null;
+    socket.on('job_status', function(data) {
+        if (data.active && data.job_type === 'llm_inference') {
+            const panel = document.getElementById('llm-output-panel');
+            panel.classList.remove('hidden');
+
+            if (_llmActiveJobId !== data.job_id) {
+                _llmActiveJobId = data.job_id;
+                _llmWorkerBoxes = {};
+                document.getElementById('llm-worker-streams').innerHTML = '';
+                document.getElementById('llm-final-output').classList.add('hidden');
+                document.getElementById('llm-panel-title').textContent = data.name || 'Running LLM Inference...';
+            }
+
+            // Create worker stream boxes for each chunk
+            if (data.chunks) {
+                data.chunks.forEach(function(chunk) {
+                    const ci = chunk.chunk_index;
+                    if (!_llmWorkerBoxes[ci]) {
+                        const box = document.createElement('div');
+                        box.id = `llm-worker-box-${ci}`;
+                        box.style.cssText = 'background:rgba(0,0,0,0.35);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:14px;';
+                        box.innerHTML = `
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <span style="width:8px;height:8px;border-radius:50%;background:#00c896;display:inline-block;animation:pulse 1.5s infinite;" id="llm-dot-${ci}"></span>
+                                    <span style="font-size:12px;font-weight:700;color:#00c896;">Worker ${ci + 1}</span>
+                                    <span id="llm-chunk-status-${ci}" style="font-size:11px;color:#3d7d6a;font-weight:600;">Generating...</span>
+                                </div>
+                                <span id="llm-token-count-${ci}" style="font-size:11px;color:#3d7d6a;font-family:var(--font-mono);">0 tokens</span>
+                            </div>
+                            <div id="llm-stream-text-${ci}" style="font-family:var(--font-mono);font-size:12px;color:#7dffd3;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow-y:auto;line-height:1.6;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;min-height:40px;">
+                                <span class="typing-cursor" style="animation:pulse 1s infinite;">▋</span>
+                            </div>`;
+                        document.getElementById('llm-worker-streams').appendChild(box);
+                        _llmWorkerBoxes[ci] = box;
+                    }
+
+                    // Update status
+                    const statusEl = document.getElementById(`llm-chunk-status-${ci}`);
+                    const dotEl    = document.getElementById(`llm-dot-${ci}`);
+                    if (statusEl) {
+                        if (chunk.status === 'COMPLETED') {
+                            statusEl.textContent = '✅ Done';
+                            statusEl.style.color = '#00e676';
+                            if (dotEl) { dotEl.style.background = '#00e676'; dotEl.style.animation = 'none'; }
+                        } else if (chunk.status === 'RUNNING') {
+                            statusEl.textContent = `Generating... (${chunk.progress}%)`;
+                        } else if (chunk.status === 'FAILED') {
+                            statusEl.textContent = '❌ Failed';
+                            statusEl.style.color = '#ff5252';
+                            if (dotEl) { dotEl.style.background = '#ff5252'; dotEl.style.animation = 'none'; }
+                        }
+                    }
+                });
+            }
+
+            // Update model/mode badges from job name
+            const modelMatch = data.name && data.name.match(/\[(.+?)\]/);
+            if (modelMatch) document.getElementById('llm-model-badge').textContent = modelMatch[1];
+
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    });
+
+    // Show final output when LLM job completes
+    socket.on('job_complete', function(data) {
+        if (data.job_type === 'llm_inference') {
+            document.getElementById('llm-panel-title').textContent = '✅ ' + (data.name || 'LLM Inference Complete');
+            document.getElementById('llm-panel-subtitle').textContent =
+                `Completed in ${data.parallel_time}s · ${data.speedup}x speedup vs single machine`;
+
+            const finalOut = document.getElementById('llm-final-output');
+            finalOut.classList.remove('hidden');
+            document.getElementById('llm-final-pre').textContent = data.summary || '';
+            finalOut.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+
+    // Override form submit to inject LLM-specific fields
+    const _origFormSubmit = document.getElementById('job-submission-form').onsubmit;
+    document.getElementById('job-submission-form').addEventListener('submit', function(e) {
+        const jobType = document.getElementById('job-type-select').value;
+        if (jobType !== 'llm_inference') return;  // let normal handler run for others
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const formData = new FormData();
+        formData.append('job_type',    'llm_inference');
+        formData.append('llm_model',   document.getElementById('llm-model-input').value);
+        formData.append('llm_mode',    document.getElementById('llm-mode-select').value);
+        formData.append('ollama_url',  document.getElementById('llm-ollama-url').value);
+
+        const mode = document.getElementById('llm-mode-select').value;
+        if (mode === 'ensemble') {
+            const prompt = document.getElementById('llm-prompt-input').value.trim();
+            if (!prompt) { alert('Please enter a prompt for Ensemble mode.'); return; }
+            formData.append('prompt', prompt);
+        } else if (mode === 'batch_qa') {
+            const qs = document.getElementById('llm-questions-input').value.trim();
+            if (!qs) { alert('Please enter at least one question.'); return; }
+            formData.append('questions', qs);
+        } else if (mode === 'document') {
+            const doc = document.getElementById('llm-document-input').value.trim();
+            if (!doc) { alert('Please paste a document to analyse.'); return; }
+            formData.append('document', doc);
+        }
+
+        const chunksVal = document.getElementById('chunks-select').value;
+        if (chunksVal) formData.append('chunks', chunksVal);
+
+        const btn = document.getElementById('btn-submit-job');
+        btn.disabled = true;
+        btn.querySelector('.btn-text').textContent = '⏳ Submitting LLM job...';
+
+        // Show LLM panel immediately
+        document.querySelector('.nav-item[data-tab="ai"]').click();
+        const panel = document.getElementById('llm-output-panel');
+        panel.classList.remove('hidden');
+        _llmActiveJobId = null;
+        _llmWorkerBoxes = {};
+        document.getElementById('llm-worker-streams').innerHTML = '<div style="color:#5aad8e;font-size:13px;padding:12px;">⏳ Waiting for workers to start generating...</div>';
+        document.getElementById('llm-final-output').classList.add('hidden');
+        const modelName = document.getElementById('llm-model-input').value;
+        document.getElementById('llm-model-badge').textContent = modelName;
+        document.getElementById('llm-panel-title').textContent = `Running ${modelName} across cluster...`;
+        const modeLabels = { ensemble: 'Ensemble Reasoning', batch_qa: 'Batch Q&A', document: 'Document Analysis' };
+        document.getElementById('llm-mode-badge').textContent = modeLabels[mode] || mode;
+
+        fetch('/api/run_job', { method: 'POST', body: formData })
+            .then(r => r.json())
+            .then(data => {
+                btn.disabled = false;
+                btn.querySelector('.btn-text').textContent = 'Execute on Cluster Grid';
+                if (!data.success) {
+                    alert('Error: ' + data.error);
+                    panel.classList.add('hidden');
+                }
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.querySelector('.btn-text').textContent = 'Execute on Cluster Grid';
+                alert('Submission failed: ' + err);
+            });
+    }, true);  // capture phase so it runs before generic submit
+
+    </script>
+</body>
+
+</html></div>
+</div>

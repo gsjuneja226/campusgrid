@@ -1,0 +1,63 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (BLUR_IMAGES.PY)
+============================================================
+Job ID:             34
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 19.113 seconds
+Single-Machine Est: 18.664 seconds
+Calculated Speedup: 0.98x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Compiled results from 4 parallel workers:
+
+--- Worker Chunk 1 Output ---
+Processing chunk 0 -> 16% doneProcessing chunk 0 -> 33% doneProcessing chunk 0 -> 50% doneProcessing chunk 0 -> 66% doneProcessing chunk 0 -> 83% doneProcessing chunk 0 -> 100% done
+--- Return Value ---
+Image Frame 00 processed. Output Resolution: 150x150 (Mean Pixel Value: 0.00)
+Image Frame 01 processed. Output Resolution: 150x150 (Mean Pixel Value: 0.78)
+Image Frame 02 processed. Output Resolution: 150x150 (Mean Pixel Value: 3.46)
+Image Frame 03 processed. Output Resolution: 150x150 (Mean Pixel Value: 7.90)
+Image Frame 04 processed. Output Resolution: 150x150 (Mean Pixel Value: 14.11)
+Image Frame 05 processed. Output Resolution: 150x150 (Mean Pixel Value: 22.00)
+
+--- Worker Chunk 2 Output ---
+Processing chunk 1 -> 16% doneProcessing chunk 1 -> 33% doneProcessing chunk 1 -> 50% doneProcessing chunk 1 -> 66% doneProcessing chunk 1 -> 83% doneProcessing chunk 1 -> 100% done
+--- Return Value ---
+Image Frame 06 processed. Output Resolution: 150x150 (Mean Pixel Value: 31.84)
+Image Frame 07 processed. Output Resolution: 150x150 (Mean Pixel Value: 43.53)
+Image Frame 08 processed. Output Resolution: 150x150 (Mean Pixel Value: 56.81)
+Image Frame 09 processed. Output Resolution: 150x150 (Mean Pixel Value: 71.96)
+Image Frame 10 processed. Output Resolution: 150x150 (Mean Pixel Value: 88.68)
+Image Frame 11 processed. Output Resolution: 150x150 (Mean Pixel Value: 107.27)
+
+--- Worker Chunk 3 Output ---
+Processing chunk 2 -> 16% doneProcessing chunk 2 -> 33% doneProcessing chunk 2 -> 50% doneProcessing chunk 2 -> 66% doneProcessing chunk 2 -> 83% doneProcessing chunk 2 -> 100% done
+--- Return Value ---
+Image Frame 12 processed. Output Resolution: 150x150 (Mean Pixel Value: 127.81)
+Image Frame 13 processed. Output Resolution: 150x150 (Mean Pixel Value: 150.02)
+Image Frame 14 processed. Output Resolution: 150x150 (Mean Pixel Value: 174.09)
+Image Frame 15 processed. Output Resolution: 150x150 (Mean Pixel Value: 199.82)
+Image Frame 16 processed. Output Resolution: 150x150 (Mean Pixel Value: 219.27)
+Image Frame 17 processed. Output Resolution: 150x150 (Mean Pixel Value: 232.69)
+
+--- Worker Chunk 4 Output ---
+Processing chunk 3 -> 16% doneProcessing chunk 3 -> 33% doneProcessing chunk 3 -> 50% doneProcessing chunk 3 -> 66% doneProcessing chunk 3 -> 83% doneProcessing chunk 3 -> 100% done
+--- Return Value ---
+Image Frame 18 processed. Output Resolution: 150x150 (Mean Pixel Value: 242.45)
+Image Frame 19 processed. Output Resolution: 150x150 (Mean Pixel Value: 249.21)
+Image Frame 20 processed. Output Resolution: 150x150 (Mean Pixel Value: 253.34)
+Image Frame 21 processed. Output Resolution: 150x150 (Mean Pixel Value: 254.93)
+Image Frame 22 processed. Output Resolution: 150x150 (Mean Pixel Value: 255.00)
+Image Frame 23 processed. Output Resolution: 150x150 (Mean Pixel Value: 255.00)
+
+
+
+============================================================
+RAW RESULT:
+[
+  "Processing chunk 0 -> 16% done\rProcessing chunk 0 -> 33% done\rProcessing chunk 0 -> 50% done\rProcessing chunk 0 -> 66% done\rProcessing chunk 0 -> 83% done\rProcessing chunk 0 -> 100% done\r\n--- Return Value ---\nImage Frame 00 processed. Output Resolution: 150x150 (Mean Pixel Value: 0.00)\nImage Frame 01 processed. Output Resolution: 150x150 (Mean Pixel Value: 0.78)\nImage Frame 02 processed. Output Resolution: 150x150 (Mean Pixel Value: 3.46)\nImage Frame 03 processed. Output Resolution: 150x150 (Mean Pixel Value: 7.90)\nImage Frame 04 processed. Output Resolution: 150x150 (Mean Pixel Value: 14.11)\nImage Frame 05 processed. Output Resolution: 150x150 (Mean Pixel Value: 22.00)",
+  "Processing chunk 1 -> 16% done\rProcessing chunk 1 -> 33% done\rProcessing chunk 1 -> 50% done\rProcessing chunk 1 -> 66% done\rProcessing chunk 1 -> 83% done\rProcessing chunk 1 -> 100% done\r\n--- Return Value ---\nImage Frame 06 processed. Output Resolution: 150x150 (Mean Pixel Value: 31.84)\nImage Frame 07 processed. Output Resolution: 150x150 (Mean Pixel Value: 43.53)\nImage Frame 08 processed. Output Resolution: 150x150 (Mean Pixel Value: 56.81)\nImage Frame 09 processed. Output Resolution: 150x150 (Mean Pixel Value: 71.96)\nImage Frame 10 processed. Output Resolution: 150x150 (Mean Pixel Value: 88.68)\nImage Frame 11 processed. Output Resolution: 150x150 (Mean Pixel Value: 107.27)",
+  "Processing chunk 2 -> 16% done\rProcessing chunk 2 -> 33% done\rProcessing chunk 2 -> 50% done\rProcessing chunk 2 -> 66% done\rProcessing chunk 2 -> 83% done\rProcessing chunk 2 -> 100% done\r\n--- Return Value ---\nImage Frame 12 processed. Output Resolution: 150x150 (Mean Pixel Value: 127.81)\nImage Frame 13 processed. Output Resolution: 150x150 (Mean Pixel Value: 150.02)\nImage Frame 14 processed. Output Resolution: 150x150 (Mean Pixel Value: 174.09)\nImage Frame 15 processed. Output Resolution: 150x150 (Mean Pixel Value: 199.82)\nImage Frame 16 processed. Output Resolution: 150x150 (Mean Pixel Value: 219.27)\nImage Frame 17 processed. Output Resolution: 150x150 (Mean Pixel Value: 232.69)",
+  "Processing chunk 3 -> 16% done\rProcessing chunk 3 -> 33% done\rProcessing chunk 3 -> 50% done\rProcessing chunk 3 -> 66% done\rProcessing chunk 3 -> 83% done\rProcessing chunk 3 -> 100% done\r\n--- Return Value ---\nImage Frame 18 processed. Output Resolution: 150x150 (Mean Pixel Value: 242.45)\nImage Frame 19 processed. Output Resolution: 150x150 (Mean Pixel Value: 249.21)\nImage Frame 20 processed. Output Resolution: 150x150 (Mean Pixel Value: 253.34)\nImage Frame 21 processed. Output Resolution: 150x150 (Mean Pixel Value: 254.93)\nImage Frame 22 processed. Output Resolution: 150x150 (Mean Pixel Value: 255.00)\nImage Frame 23 processed. Output Resolution: 150x150 (Mean Pixel Value: 255.00)"
+]

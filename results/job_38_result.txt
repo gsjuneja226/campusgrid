@@ -1,0 +1,75 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (PROCESS_PORTRAIT.PY)
+============================================================
+Job ID:             38
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 10.754 seconds
+Single-Machine Est: 8.719 seconds
+Calculated Speedup: 0.81x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Compiled results from 8 parallel workers:
+
+--- Worker Chunk 1 Output ---
+Worker 1: Applying Gaussian Blur filter (Radius: 2)...
+Processing chunk 0 -> 25% doneProcessing chunk 0 -> 75% doneProcessing chunk 0 -> 100% done
+--- Return Value ---
+Chunk 0 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_0_radius_2.png)
+
+--- Worker Chunk 2 Output ---
+Worker 2: Applying Gaussian Blur filter (Radius: 6)...
+Processing chunk 1 -> 25% doneProcessing chunk 1 -> 75% doneProcessing chunk 1 -> 100% done
+--- Return Value ---
+Chunk 1 (Radius 6) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_1_radius_6.png)
+
+--- Worker Chunk 3 Output ---
+Worker 3: Applying Gaussian Blur filter (Radius: 12)...
+Processing chunk 2 -> 25% doneProcessing chunk 2 -> 75% doneProcessing chunk 2 -> 100% done
+--- Return Value ---
+Chunk 2 (Radius 12) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_2_radius_12.png)
+
+--- Worker Chunk 4 Output ---
+Worker 4: Applying Gaussian Blur filter (Radius: 20)...
+Processing chunk 3 -> 25% doneProcessing chunk 3 -> 75% doneProcessing chunk 3 -> 100% done
+--- Return Value ---
+Chunk 3 (Radius 20) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_3_radius_20.png)
+
+--- Worker Chunk 5 Output ---
+Worker 5: Applying Gaussian Blur filter (Radius: 2)...
+Processing chunk 4 -> 25% doneProcessing chunk 4 -> 75% doneProcessing chunk 4 -> 100% done
+--- Return Value ---
+Chunk 4 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_4_radius_2.png)
+
+--- Worker Chunk 6 Output ---
+Worker 6: Applying Gaussian Blur filter (Radius: 6)...
+Processing chunk 5 -> 25% doneProcessing chunk 5 -> 75% doneProcessing chunk 5 -> 100% done
+--- Return Value ---
+Chunk 5 (Radius 6) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_5_radius_6.png)
+
+--- Worker Chunk 7 Output ---
+Worker 7: Applying Gaussian Blur filter (Radius: 12)...
+Processing chunk 6 -> 25% doneProcessing chunk 6 -> 75% doneProcessing chunk 6 -> 100% done
+--- Return Value ---
+Chunk 6 (Radius 12) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_6_radius_12.png)
+
+--- Worker Chunk 8 Output ---
+Worker 8: Applying Gaussian Blur filter (Radius: 20)...
+Processing chunk 7 -> 25% doneProcessing chunk 7 -> 75% doneProcessing chunk 7 -> 100% done
+--- Return Value ---
+Chunk 7 (Radius 20) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_7_radius_20.png)
+
+
+
+============================================================
+RAW RESULT:
+[
+  "Worker 1: Applying Gaussian Blur filter (Radius: 2)...\nProcessing chunk 0 -> 25% done\rProcessing chunk 0 -> 75% done\rProcessing chunk 0 -> 100% done\r\n--- Return Value ---\nChunk 0 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_0_radius_2.png)",
+  "Worker 2: Applying Gaussian Blur filter (Radius: 6)...\nProcessing chunk 1 -> 25% done\rProcessing chunk 1 -> 75% done\rProcessing chunk 1 -> 100% done\r\n--- Return Value ---\nChunk 1 (Radius 6) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_1_radius_6.png)",
+  "Worker 3: Applying Gaussian Blur filter (Radius: 12)...\nProcessing chunk 2 -> 25% done\rProcessing chunk 2 -> 75% done\rProcessing chunk 2 -> 100% done\r\n--- Return Value ---\nChunk 2 (Radius 12) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_2_radius_12.png)",
+  "Worker 4: Applying Gaussian Blur filter (Radius: 20)...\nProcessing chunk 3 -> 25% done\rProcessing chunk 3 -> 75% done\rProcessing chunk 3 -> 100% done\r\n--- Return Value ---\nChunk 3 (Radius 20) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_3_radius_20.png)",
+  "Worker 5: Applying Gaussian Blur filter (Radius: 2)...\nProcessing chunk 4 -> 25% done\rProcessing chunk 4 -> 75% done\rProcessing chunk 4 -> 100% done\r\n--- Return Value ---\nChunk 4 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_4_radius_2.png)",
+  "Worker 6: Applying Gaussian Blur filter (Radius: 6)...\nProcessing chunk 5 -> 25% done\rProcessing chunk 5 -> 75% done\rProcessing chunk 5 -> 100% done\r\n--- Return Value ---\nChunk 5 (Radius 6) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_5_radius_6.png)",
+  "Worker 7: Applying Gaussian Blur filter (Radius: 12)...\nProcessing chunk 6 -> 25% done\rProcessing chunk 6 -> 75% done\rProcessing chunk 6 -> 100% done\r\n--- Return Value ---\nChunk 6 (Radius 12) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_6_radius_12.png)",
+  "Worker 8: Applying Gaussian Blur filter (Radius: 20)...\nProcessing chunk 7 -> 25% done\rProcessing chunk 7 -> 75% done\rProcessing chunk 7 -> 100% done\r\n--- Return Value ---\nChunk 7 (Radius 20) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_7_radius_20.png)"
+]

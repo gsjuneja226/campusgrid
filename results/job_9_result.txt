@@ -1,0 +1,25 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (STRUCTURED_RUN.PY)
+============================================================
+Job ID:             9
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 2.089 seconds
+Single-Machine Est: 2.038 seconds
+Calculated Speedup: 0.98x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+[+] Starting structured custom script run function...
+Step 1 completed -> updating progress to 20%
+Processing chunk 0 -> 20% doneStep 2 completed -> updating progress to 40%
+Processing chunk 0 -> 40% doneStep 3 completed -> updating progress to 60%
+Processing chunk 0 -> 60% doneStep 4 completed -> updating progress to 80%
+Processing chunk 0 -> 80% doneStep 5 completed -> updating progress to 100%
+Processing chunk 0 -> 100% done[+] Structured script finished!
+
+--- Return Value ---
+Computation results successfully simulated.
+
+============================================================
+RAW RESULT:
+"[+] Starting structured custom script run function...\nStep 1 completed -> updating progress to 20%\nProcessing chunk 0 -> 20% done\rStep 2 completed -> updating progress to 40%\nProcessing chunk 0 -> 40% done\rStep 3 completed -> updating progress to 60%\nProcessing chunk 0 -> 60% done\rStep 4 completed -> updating progress to 80%\nProcessing chunk 0 -> 80% done\rStep 5 completed -> updating progress to 100%\nProcessing chunk 0 -> 100% done\r[+] Structured script finished!\n\n--- Return Value ---\nComputation results successfully simulated."

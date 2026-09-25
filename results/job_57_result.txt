@@ -1,0 +1,47 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (RENDER_FRAMES.PY)
+============================================================
+Job ID:             57
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 27.718 seconds
+Single-Machine Est: 26.947 seconds
+Calculated Speedup: 0.97x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Compiled results from 4 parallel workers:
+
+--- Worker Chunk 1 Output ---
+Rendering frames 1 to 30...
+
+--- Return Value ---
+Success: Rendered frames 001 to 030 (30 total frames).
+
+--- Worker Chunk 2 Output ---
+Rendering frames 31 to 60...
+
+--- Return Value ---
+Success: Rendered frames 031 to 060 (30 total frames).
+
+--- Worker Chunk 3 Output ---
+Rendering frames 61 to 90...
+
+--- Return Value ---
+Success: Rendered frames 061 to 090 (30 total frames).
+
+--- Worker Chunk 4 Output ---
+Rendering frames 91 to 120...
+
+--- Return Value ---
+Success: Rendered frames 091 to 120 (30 total frames).
+
+
+
+============================================================
+RAW RESULT:
+[
+  "Rendering frames 1 to 30...\n\n--- Return Value ---\nSuccess: Rendered frames 001 to 030 (30 total frames).",
+  "Rendering frames 31 to 60...\n\n--- Return Value ---\nSuccess: Rendered frames 031 to 060 (30 total frames).",
+  "Rendering frames 61 to 90...\n\n--- Return Value ---\nSuccess: Rendered frames 061 to 090 (30 total frames).",
+  "Rendering frames 91 to 120...\n\n--- Return Value ---\nSuccess: Rendered frames 091 to 120 (30 total frames)."
+]

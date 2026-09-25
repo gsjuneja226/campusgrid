@@ -1,0 +1,17 @@
+CAMPUSGRID JOB REPORT: VIDEO INTERCEPTOR: 14.09.2026_00.26.29_REC.MP4 (CINEMATIC_GRADE)
+============================================================
+Job ID:             88
+Job Type:           video_processing
+Workers Deployed:   1
+Parallel Execution: 5.212 seconds
+Single-Machine Est: 3.920 seconds
+Calculated Speedup: 0.75x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Processed 1 video segments across 1 workers.
+Final video: vidproc_job_88_output.mp4
+
+============================================================
+RAW RESULT:
+"Processed 1 video segments across 1 workers.\nFinal video: vidproc_job_88_output.mp4"

@@ -1,0 +1,20 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (WORD_COUNT.PY)
+============================================================
+Job ID:             15
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 0.062 seconds
+Single-Machine Est: 0.009 seconds
+Calculated Speedup: 0.15x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+
+[!] Note: Exposing a run() function that requires arguments ['paragraphs'].
+Since this is executed as a generic custom script, the run() call was skipped.
+Make sure required parameters have default values, or put execution code at the top-level.
+
+
+============================================================
+RAW RESULT:
+"\n[!] Note: Exposing a run() function that requires arguments ['paragraphs'].\nSince this is executed as a generic custom script, the run() call was skipped.\nMake sure required parameters have default values, or put execution code at the top-level.\n"

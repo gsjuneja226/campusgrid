@@ -1,0 +1,16 @@
+CAMPUSGRID JOB REPORT: CUSTOM SCRIPT (DEMO_PI.PY)
+============================================================
+Job ID:             12
+Job Type:           custom_script
+Workers Deployed:   1
+Parallel Execution: 0.115 seconds
+Single-Machine Est: 0.039 seconds
+Calculated Speedup: 0.34x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Script executed successfully with empty output.
+
+============================================================
+RAW RESULT:
+"Script executed successfully with empty output."

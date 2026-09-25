@@ -1,0 +1,16 @@
+CAMPUSGRID JOB REPORT: GAUSSIAN PORTRAIT BLUR (1 CHUNKS)
+============================================================
+Job ID:             72
+Job Type:           process_portrait
+Workers Deployed:   1
+Parallel Execution: 0.777 seconds
+Single-Machine Est: 0.694 seconds
+Calculated Speedup: 0.89x
+============================================================
+
+EXECUTION RESULT SUMMARY:
+Chunk 0 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_0_radius_2.png)
+
+============================================================
+RAW RESULT:
+"Chunk 0 (Radius 2) completed -> [Download/View Image](http://localhost:5000/api/results/blurred_portrait_chunk_0_radius_2.png)"
